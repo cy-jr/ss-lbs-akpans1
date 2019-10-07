@@ -1,0 +1,35 @@
+
+ 1100  javac ShoppingCart.java
+ 1101  java ShoppingCart
+ 1102  ajc ShoppingCart.java ShoppingCartAspect.aj
+ 1103  ls
+ 1104  ajc -cp ".:/usr/share/java/aspectjrt.jar" -inpath ShoppingCart.jar ShoppingCartAspect.aj -outjar ShoppingCart-mod.jar
+ 1105  java classpath ".:/usr/share/java/aspectjrt.jar:usr/share/java/aspectjtools.jar" -javaagent:/usr/share/java/aspectjweaver.jar -jar ShoppingCart-mod.jar
+ 1106  java -classpath ".:/usr/share/java/aspectjrt.jar:usr/share/java/aspectjtools.jar" -javaagent:/usr/share/java/aspectjweaver.jar -jar ShoppingCart-mod.jar
+ 1107  jar -cvfe ShoppingCart.jar ShoppingCart ShoppingCart.java
+ 1108  ls
+ 1109  ajc -cp ".:/usr/share/java/aspectjrt.jar" -inpath ShoppingCart.jar ShoppingCartAspect.aj -outjar ShoppingCart-mod.jar
+ 1110  java -classpath ".:/usr/share/java/aspectjrt.jar:usr/share/java/aspectjtools.jar" -javaagent:/usr/share/java/aspectjweaver.jar -jar ShoppingCart-mod.jar
+ 1111  javac ShoppingCart.java
+ 1112  jar -cvfe ShoppingCart.jar ShoppingCart ShoppingCart.java
+ 1113  ajc -cp ".:/usr/share/java/aspectjrt.jar" -inpath ShoppingCart.jar ShoppingCartAspect.aj -outjar ShoppingCart-mod.jar
+ 1114  java -classpath ".:/usr/share/java/aspectjrt.jar:usr/share/java/aspectjtools.jar" -javaagent:/usr/share/java/aspectjweaver.jar -jar ShoppingCart-mod.jar
+ 1115  ls
+ 1116  java ShoppingCart
+ 1117  jar -cvfe ShoppingCart.jar ShoppingCart ShoppingCart.java
+  ajc -cp ".:/usr/share/java/aspectjrt.jar" -inpath ShoppingCart.jar ShoppingCartAspect.aj -outjar ShoppingCart-mod1.jar
+ 1119  java -classpath ".:/usr/share/java/aspectjrt.jar:usr/share/java/aspectjtools.jar" -javaagent:/usr/share/java/aspectjweaver.jar -jar ShoppingCart-mod1.jar
+ 1120  javac ShoppingCart.java
+ 1121  java -classpath ".:/usr/share/java/aspectjrt.jar:usr/share/java/aspectjtools.jar" -javaagent:/usr/share/java/aspectjweaver.jar -jar ShoppingCart-mod1.jar
+ 1122  jar -cvfe ShoppingCart.jar ShoppingCart ShoppingCart.class
+ 1123  ajc -cp ".:/usr/share/java/aspectjrt.jar" -inpath ShoppingCart.jar ShoppingCartAspect.aj -outjar ShoppingCart-mod1.jar
+ 1124  java -classpath ".:/usr/share/java/aspectjrt.jar:usr/share/java/aspectjtools.jar" -javaagent:/usr/share/java/aspectjweaver.jar -jar ShoppingCart-mod1.jar
+ 1125  javac ShoppingCart.java
+ 1126  java ShoppingCart
+ 1127  jar -cvfe ShoppingCart.jar ShoppingCart ShoppingCart.class
+ 1128  ls
+ 1129  java -jar ShoppingCart.jar
+ 1130  jar -cvfe ShoppingCart.jar ShoppingCart *.class
+ 1131  java -jar ShoppingCart.jar
+ 1132  ajc -cp ".:/usr/share/java/aspectjrt.jar" -inpath ShoppingCart.jar ShoppingCartAspect.aj -outjar ShoppingCart-mod1.jar
+ 1133  history > historytext.txt
