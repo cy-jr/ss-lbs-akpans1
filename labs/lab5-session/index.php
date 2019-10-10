@@ -8,7 +8,7 @@
 	<h1>SS-LBS-F19 - Lab 5 - Session Hijacking and Protection</h1>
 	<h2>Simple Web Application</h2> 
    	<h2>Simple index page by <font color="blue">Phu Phung</font>, customized by "Akpan"</h2>
-   	<?php  ?>
+   	<?php $_SESSION["browser"] = $_SERVER["HTTP_USER_AGENT"]; ?>
 <?php 
 	session_start();
 	$welcome = "Welcome back "; //default message for return users
@@ -17,7 +17,7 @@
   	/*for debug only*/echo "DEBUG>Received: username=\"" . $username .  "\" and password=\"" . $password . "\"<br>\n";
 	if (isset($username) and isset($password) ){
 	//the case username and password is provided
-    	if (mockchecklogin($username,$password)){ 
+    	if (checklogin($username,$password)){ 
       		$_SESSION["logged"]=TRUE;
 			$_SESSION["username"] = $username;
 			$welcome = "Welcome "; //not previously logged-in 
@@ -52,6 +52,38 @@
 		if (($username== "akpans1@udayton.edu") and ($password == "sslbsf19")) 
 		  return TRUE;
 		return FALSE;
+  	}
+  		function checklogin($username, $password) {
+		//access the real database to check the username/password
+   		$dbconnection = mysqli_connect("localhost", "root", "seedubuntu","ss_lbs_f19");
+
+   		$mysqli = new mysqli('localhost',
+                             'root',
+                             'seedubuntu',
+                             'ss_lbs_f19');
+
+   		if ($mysqli->connect_errno) {
+            echo "Connection to the database falied..";
+            exit();
+        }
+        $sql = "select * from users where username='". $username."' and password=password('".$password."');";
+
+         echo "DEBUG$ sql: ".$sql."\n<br>";
+
+        $result = $mysqli->query($sql);
+        if($result->num_rows >= 1) return TRUE;
+        {			
+			$row = mysqli_fetch_assoc($result);
+
+			if($row['username'] === $username){
+				
+				return true;
+			}
+		}
+        if($result->num_rows == 1) {
+        	return TRUE;	
+        }
+        return FALSE;
   	}
 ?>
 </body>
