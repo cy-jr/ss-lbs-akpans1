@@ -31,7 +31,7 @@
   		}
   		if($_SESSION["browser"] != $_SERVER["HTTP_USER_AGENT"]){
   			echo "Session Hijacking Detected!!!";
-  			// die();
+  			die();
   		}
 	}
 	//the main business logic implementation of the page

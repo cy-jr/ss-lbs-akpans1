@@ -1,0 +1,1 @@
+openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout ss-lbs.key -out ss-lbs.crt
