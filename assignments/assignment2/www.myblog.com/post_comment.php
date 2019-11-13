@@ -8,4 +8,3 @@
   header("Location: post.php?id=".intval($_GET['id']));
   die();
 ?>
-

