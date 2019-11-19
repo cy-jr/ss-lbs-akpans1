@@ -1,4 +1,5 @@
 <?php
+#new
   $site = "PentesterLab vulnerable blog";
   require "header.php";
   $post = Post::find(intval($_GET['id']));
@@ -11,7 +12,7 @@
       ?> 
      </div>
 
-      <form method="POST" action="/post_comment.php?id=<?php echo htmlentities($_GET['id']); ?>"> 
+      <form method="POST" action="/post_comment.php?id=<?php echo $_GET['id']; ?>"> 
         Title: <input type="text" name="title" / ><br/>
         Author: <input type="text" name="author" / ><br/>
         Text: <textarea name="text" cols="80" rows="5">
