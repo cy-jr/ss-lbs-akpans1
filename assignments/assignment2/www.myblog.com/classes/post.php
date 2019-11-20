@@ -78,7 +78,7 @@ class Post{
     $str.= "<p>".htmlentities($this->text)."</p></div>";   
     $str.= "\n\n<div class='comments'><h3>Comments: </h3>\n<ul>";
     foreach ($this->get_comments() as $comment) {
-      $str.= "\n\t<li>". $comment->text ."</li>";
+      $str.= "\n\t<li>". htmlspecialchars($comment->text) ."</li>";
     }
     $str.= "\n</ul></div>";
     return $str;
@@ -131,8 +131,8 @@ class Post{
   function update($title, $text) {
       global $dblink;
       $sql = "UPDATE posts SET title='";
-      $sql .= mysqli_real_escape_string($dblink, $_POST["title"])."',text='";
-      $sql .= mysqli_real_escape_string($dblink, $_POST["text"])."' WHERE id=";
+      $sql .= mysqli_real_escape_string($dblink, htmlspecialchars($_POST["title"]))."',text='";
+      $sql .= mysqli_real_escape_string($dblink, htmlspecialchars($_POST["text"]))."' WHERE id=";
       $sql .= intval($this->id);
       $result = mysqli_query($dblink,$sql);
       $this->title = $title; 
@@ -142,8 +142,8 @@ class Post{
   function create(){
       global $dblink;
       $sql = "INSERT INTO posts (title, text) VALUES ('";
-      $title = mysqli_real_escape_string($dblink, $_POST["title"]);
-      $text = mysqli_real_escape_string($dblink, $_POST["text"]);
+      $title = mysqli_real_escape_string($dblink, htmlspecialchars($_POST["title"]));
+      $text = mysqli_real_escape_string($dblink, htmlspecialchars($_POST["text"]));
       $sql .= $title."','".$text;
       $sql.= "')";
       $result = mysqli_query($dblink,$sql);
