@@ -147,7 +147,6 @@ class Post{
       $sql .= $title."','".$text;
       $sql.= "')";
       $result = mysqli_query($dblink,$sql);
-
   }
 }
 ?>

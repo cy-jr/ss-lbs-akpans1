@@ -4,6 +4,8 @@
   require("../classes/db.php");
   require("../classes/phpfix.php");
   require("../classes/post.php");
+    $rand = bin2hex(openssl_random_pseudo_bytes(16));
+    $_SESSION["nocsrftoken"] = $rand;
 
 ?>
 
@@ -13,12 +15,10 @@
         </textarea><br/>
     <input type="hidden" name="nocsrftoken" value="<?php echo $rand; ?>">
     <input type="submit" name="Add" value="Add">
-
   </form>
 
 <?php
-$rand = bin2hex(openssl_random_pseudo_bytes(16));
-$_SESSION["nocsrftoken"] = $rand;
+
   require("footer.php");
 
 ?>
