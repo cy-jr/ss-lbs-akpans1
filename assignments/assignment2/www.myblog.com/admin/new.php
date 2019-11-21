@@ -4,8 +4,7 @@
   require("../classes/db.php");
   require("../classes/phpfix.php");
   require("../classes/post.php");
-$rand = bin2hex(openssl_random_pseudo_bytes(16));
-$_SESSION["nocsrftoken"] = $rand;
+
 ?>
 
   <form action="index.php" method="POST" enctype="multipart/form-data">
@@ -18,6 +17,8 @@ $_SESSION["nocsrftoken"] = $rand;
   </form>
 
 <?php
+$rand = bin2hex(openssl_random_pseudo_bytes(16));
+$_SESSION["nocsrftoken"] = $rand;
   require("footer.php");
 
 ?>

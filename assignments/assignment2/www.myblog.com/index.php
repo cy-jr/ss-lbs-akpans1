@@ -9,7 +9,8 @@
       <?php 
     	foreach ($posts as $post) {
             echo $post->render(); 
-      } ?> 
+      } 
+      ?> 
      </div>
  
     </div>
@@ -17,8 +18,6 @@
 
 
 <?php
-
-
   require "footer.php";
 ?>
 

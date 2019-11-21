@@ -6,12 +6,8 @@
   require("../classes/post.php");
   require("../classes/comment.php");
 
+
    if(isset($_POST['title'])){
-      $nocsrftoken = $_POST["nocsrftoken"];
-      if(!isset($nocsrftoken) or ($nocsrftoken != $_SESSION["nocsrftoken"])){
-        echo "CSRF detected; Please login";
-        die();
-      }
       Post::create();
     }
    
@@ -38,6 +34,13 @@
 </div>
 <?php
   require("footer.php");
-
+/*
+      $nocsrftoken = $_POST["nocsrftoken"];
+      if(!isset($nocsrftoken) or ($nocsrftoken != $_SESSION["nocsrftoken"])){
+        echo "CSRF detected; Please login";
+        die();
+      }
+*/
 ?>
+
 
