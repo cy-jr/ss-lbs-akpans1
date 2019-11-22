@@ -131,25 +131,25 @@ class Post{
     return $post;
   }
 
-  function delete($id) {
-    global $dblink;
-    if (!preg_match('/^[0-9]+$/', $id)) {
-      die("ERROR: INTEGER REQUIRED");
-    }
-    $result = mysqli_query($dblink, "DELETE FROM posts where id=".(int)$id);
-  }
-
   // function delete($id) {
   //   global $dblink;
   //   if (!preg_match('/^[0-9]+$/', $id)) {
   //     die("ERROR: INTEGER REQUIRED");
   //   }
-  //   // $result = mysqli_query($dblink, "DELETE FROM posts where id=".(int)$id);
-  //   $prepared_sql = "DELETE FROM posts where id=?";
-  //   $stmt = $mysqli_prepare($dblink,$prepared_sql);
-  //   mysqli_stmt_bind_param($stmt,'i',$id);
-  //   mysqli_stmt_execute($stmt);
+  //   $result = mysqli_query($dblink, "DELETE FROM posts where id=".(int)$id);
   // }
+
+  function delete($id) {
+    global $dblink;
+    if (!preg_match('/^[0-9]+$/', $id)) {
+      die("ERROR: INTEGER REQUIRED");
+    }
+    // $result = mysqli_query($dblink, "DELETE FROM posts where id=".(int)$id);
+    $prepared_sql = "DELETE FROM posts where id=?";
+    $stmt = mysqli_prepare($dblink,$prepared_sql);
+    mysqli_stmt_bind_param($stmt,'i',$id);
+    mysqli_stmt_execute($stmt);
+  }
   
   function update1($title, $text) {
       global $dblink;

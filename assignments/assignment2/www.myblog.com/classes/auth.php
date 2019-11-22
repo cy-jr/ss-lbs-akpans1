@@ -24,8 +24,8 @@
     die();
   }
   //TODO: check browser info in session 
-  if($_SESSION["browser"] != $_SERVER["HTTP_USER_AGENT"]){
-    echo "Detected Session Hijacking attempt";
-    die();
-  }
+  // if($_SESSION["browser"] != $_SERVER["HTTP_USER_AGENT"]){
+  //   echo "Detected Session Hijacking attempt";
+  //   die();
+  // }
 ?>
