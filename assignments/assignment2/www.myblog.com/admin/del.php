@@ -7,14 +7,11 @@
 ?>
 
 <?php  
-
   // $post = Post::delete((int)($_GET["id"]));
   // if(isset($post)){
   // 	echo "<script type='javascript'> alert('Deleted!'); </script>";
   // }
-  
   // header("refresh: 1; url= /admin/index.php");
-  
 ?>
 
 <?php 
@@ -23,6 +20,7 @@
   require("../classes/db.php");
   require("../classes/phpfix.php");
   require("../classes/post.php");
+  //generate random token
     $rand = bin2hex(openssl_random_pseudo_bytes(16));
     $_SESSION["nocsrftoken"] = $rand;
 
