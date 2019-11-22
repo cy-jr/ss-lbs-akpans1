@@ -51,13 +51,7 @@ media="screen" />
               </div>
 
             </div>
-          </form>
-<?php 
-
-
-
-?>  
-
+          </form>  
 
 <?
   require("footer.php");
