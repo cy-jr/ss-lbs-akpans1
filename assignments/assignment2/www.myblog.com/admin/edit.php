@@ -6,11 +6,18 @@
   require("../classes/post.php");
 
   $post = Post::find($_GET['id']);
+  
+
   if (isset($_POST['title'])) {
     $post->update($_POST['title'], $_POST['text']);
   } 
+
 ?>
-  
+
+<?php
+
+?>
+
   <form action="edit.php?id=<?php echo htmlentities($_GET['id']);?>" method="POST" enctype="multipart/form-data">
     Title: 
     <input type="text" name="title" value="<?php echo htmlentities($post->title); ?>" /> <br/>
@@ -18,13 +25,20 @@
       <textarea name="text" cols="80" rows="5">
         <?php echo htmlentities($post->text); ?>
        </textarea><br/>
-
+       <input type="hidden" name="nocsrftoken" value="<?php echo $rand; ?>">
     <input type="submit" name="Update" value="Update">
-
   </form>
 
 <?php
   require("footer.php");
-
 ?>
 
+<!-- $nocsrftoken = $_POST['nocsrftoken'];
+
+    $rand = bin2hex(openssl_random_pseudo_bytes(16));
+    $_SESSION["nocsrftoken"] = $rand;
+
+      if(!isset($nocsrftoken) or (!$nocsrftoken = $_POST['nocsrftoken'])){
+         echo "CSRF detected: No token from edit page!;";
+         die();
+      } -->
