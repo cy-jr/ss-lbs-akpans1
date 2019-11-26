@@ -4,17 +4,24 @@
   require("../classes/db.php");
   require("../classes/phpfix.php");
   require("../classes/post.php");
+  $nocsrftoken = $_POST['nocsrftoken'];
 
   $post = Post::find($_GET['id']);
   
 
   if (isset($_POST['title'])) {
+      if(!isset($nocsrftoken) or (!$nocsrftoken = $_POST['nocsrftoken'])){
+         echo "CSRF detected: No token from edit page!;";
+         die();
+      }
     $post->update($_POST['title'], $_POST['text']);
   } 
 
 ?>
 
 <?php
+    $rand = bin2hex(openssl_random_pseudo_bytes(16));
+    $_SESSION["nocsrftoken"] = $rand;
 
 ?>
 
@@ -33,12 +40,8 @@
   require("footer.php");
 ?>
 
-<!-- $nocsrftoken = $_POST['nocsrftoken'];
+<!-- 
 
-    $rand = bin2hex(openssl_random_pseudo_bytes(16));
-    $_SESSION["nocsrftoken"] = $rand;
 
-      if(!isset($nocsrftoken) or (!$nocsrftoken = $_POST['nocsrftoken'])){
-         echo "CSRF detected: No token from edit page!;";
-         die();
+
       } -->
