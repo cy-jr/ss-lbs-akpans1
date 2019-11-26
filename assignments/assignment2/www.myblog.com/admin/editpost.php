@@ -4,15 +4,15 @@
   require("../classes/db.php");
   require("../classes/phpfix.php");
   require("../classes/post.php");
-$nocsrftoken = $_SESSION["nocsrftoken"];
+$nocsrftoken = $_POST["nocsrftoken"];
 $post_title = $_POST["title"];
 $post_text = $_POST["newtext"];
 $post_id = $_GET["id"];
 
   if (isset($post_title)) {
       
-      if(!isset($nocsrftoken) or ($nocsrftoken != $_SESSION["nocsrftoken"])){
-        echo "***CSRF detected; Please login";
+      if(!isset($nocsrftoken) or ($nocsrftoken != $_POST["nocsrftoken"])){
+        echo "***CSRF detected;";
         die();
       }
     

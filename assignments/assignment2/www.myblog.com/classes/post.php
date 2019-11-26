@@ -10,7 +10,7 @@ class Post{
   }   
 
  
-  function all($cat=NULL,$order =NULL) {
+  function all($cat=NULL,$order=NULL) {
     global $dblink;
     $sql = "SELECT * FROM posts";
     if (isset($order)) 
@@ -151,19 +151,22 @@ class Post{
     mysqli_stmt_execute($stmt);
   }
   
-  function update1($title, $text) {
-      global $dblink;
-      $sql = "UPDATE posts SET title='";
-      $sql .= mysqli_real_escape_string($dblink, htmlspecialchars($_POST["title"]))."',text='";
-      $sql .= mysqli_real_escape_string($dblink, htmlspecialchars($_POST["text"]))."' WHERE id=";
-      $sql .= intval($this->id);
 
-       echo "DEBUG: ".$text." ".$title." ".$id;
 
-      $result = mysqli_query($dblink,$sql);
-      $this->title = $title; 
-      $this->text = $text; 
-  } 
+  
+  // function update1($title, $text) {
+  //     global $dblink;
+  //     $sql = "UPDATE posts SET title='";
+  //     $sql .= mysqli_real_escape_string($dblink, htmlspecialchars($_POST["title"]))."',text='";
+  //     $sql .= mysqli_real_escape_string($dblink, htmlspecialchars($_POST["text"]))."' WHERE id=";
+  //     $sql .= intval($this->id);
+
+  //      echo "DEBUG: ".$text." ".$title." ".$id;
+
+  //     $result = mysqli_query($dblink,$sql);
+  //     $this->title = $title; 
+  //     $this->text = $text; 
+  // } 
 
   function update($title,$text,$id){
 

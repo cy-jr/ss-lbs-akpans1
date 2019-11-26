@@ -1,27 +1,29 @@
-
 <?php 
   require("../classes/auth.php");
   require("header.php");
   require("../classes/db.php");
   require("../classes/phpfix.php");
   require("../classes/post.php");
-  //generate random token
     $rand = bin2hex(openssl_random_pseudo_bytes(16));
     $_SESSION["nocsrftoken"] = $rand;
 
-  $post = Post::find($_GET['id']);
+    $post = Post::find($_GET['id']);
 
 ?>
-
-  <form action="delete.php?id=<?php echo htmlentities($_GET['id']);?>" method="POST" enctype="multipart/form-data">
+  <form action="editpost.php?id=<?php echo htmlentities($_GET['id']);?>" method="POST" enctype="multipart/form-data">
     Title: 
     <input type="text" name="title" value="<?php echo htmlentities($post->title); ?>" /> <br/>
     Text: 
-      <textarea name="text" cols="80" rows="5">
+      <textarea name="newtext" cols="80" rows="5">
         <?php echo htmlentities($post->text); ?>
         </textarea><br/>
+        <input type="hidden" name="id" value="<?php htmlentities($_GET['id']); ?>">
         <input type="hidden" name="nocsrftoken" value="<?php echo $rand; ?>">
-    <input type="submit" name="Delete" value="Delete">
+    <input type="submit" name="Update" value="Update">
 
   </form>
+
+<?php
+  require("footer.php");
+?>
 

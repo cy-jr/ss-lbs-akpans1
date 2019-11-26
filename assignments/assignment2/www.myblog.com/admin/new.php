@@ -18,8 +18,6 @@
   </form>
 
 <?php
-
   require("footer.php");
-
 ?>
 
