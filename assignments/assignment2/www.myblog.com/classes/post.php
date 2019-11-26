@@ -1,5 +1,5 @@
 <?php
-#new
+
 class Post{
   public $id, $title, $text, $published;
   function __construct($id, $title, $text, $published){
@@ -10,7 +10,7 @@ class Post{
   }   
 
  
-  function all($cat=NULL,$order=NULL) {
+  function all($cat=NULL,$order =NULL) {
     global $dblink;
     $sql = "SELECT * FROM posts";
     if (isset($order)) 
@@ -65,9 +65,9 @@ class Post{
   function add_comment() {
     global $dblink;
     $sql  = "INSERT INTO comments (title,author, text, post_id) values ('";
-    $sql .= mysqli_real_escape_string($dblink, htmlspecialchars($_POST["title"]))."','";
-    $sql .= mysqli_real_escape_string($dblink, htmlspecialchars($_POST["author"]))."','";
-    $sql .= mysqli_real_escape_string($dblink, htmlspecialchars($_POST["text"]))."',";
+    $sql .= mysqli_real_escape_string($dblink, $_POST["title"])."','";
+    $sql .= mysqli_real_escape_string($dblink, $_POST["author"])."','";
+    $sql .= mysqli_real_escape_string($dblink, $_POST["text"])."',";
     $sql .= intval($this->id).")";
     $result = mysqli_query($dblink, $sql);
     echo mysqli_error(); 
@@ -78,7 +78,7 @@ class Post{
     $str.= "<p>".htmlentities($this->text)."</p></div>";   
     $str.= "\n\n<div class='comments'><h3>Comments: </h3>\n<ul>";
     foreach ($this->get_comments() as $comment) {
-      $str.= "\n\t<li>". htmlspecialchars($comment->text) ."</li>";
+      $str.= "\n\t<li>".$comment->text."</li>";
     }
     $str.= "\n</ul></div>";
     return $str;
@@ -112,102 +112,42 @@ class Post{
  
   function find($id) {
     global $dblink;
-  /*
     $result = mysqli_query($dblink, "SELECT * FROM posts where id=".$id);
     $row = mysqli_fetch_assoc($result); 
     if (isset($row)){
       $post = new Post($row['id'],$row['title'],$row['text'],$row['published']);
     }
-  */
-    
-    $prepared_sql="SELECT id, title, text, published FROM posts WHERE id=?";
-    $stmt = mysqli_prepare($dblink,$prepared_sql);
-    mysqli_stmt_bind_param($stmt,'i',$id);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_bind_result($stmt, $id,$title,$text,$published);
-    if(mysqli_stmt_fetch($stmt)){
-      $post = new Post($id,$title,$text,$published);
-    }
     return $post;
+  
   }
-
-  // function delete($id) {
-  //   global $dblink;
-  //   if (!preg_match('/^[0-9]+$/', $id)) {
-  //     die("ERROR: INTEGER REQUIRED");
-  //   }
-  //   $result = mysqli_query($dblink, "DELETE FROM posts where id=".(int)$id);
-  // }
-
   function delete($id) {
     global $dblink;
     if (!preg_match('/^[0-9]+$/', $id)) {
       die("ERROR: INTEGER REQUIRED");
     }
-    // $result = mysqli_query($dblink, "DELETE FROM posts where id=".(int)$id);
-    $prepared_sql = "DELETE FROM posts where id=?";
-    $stmt = mysqli_prepare($dblink,$prepared_sql);
-    mysqli_stmt_bind_param($stmt,'i',$id);
-    mysqli_stmt_execute($stmt);
+    $result = mysqli_query($dblink, "DELETE FROM posts where id=".(int)$id);
   }
   
-
-
-  
-  // function update1($title, $text) {
-  //     global $dblink;
-  //     $sql = "UPDATE posts SET title='";
-  //     $sql .= mysqli_real_escape_string($dblink, htmlspecialchars($_POST["title"]))."',text='";
-  //     $sql .= mysqli_real_escape_string($dblink, htmlspecialchars($_POST["text"]))."' WHERE id=";
-  //     $sql .= intval($this->id);
-
-  //      echo "DEBUG: ".$text." ".$title." ".$id;
-
-  //     $result = mysqli_query($dblink,$sql);
-  //     $this->title = $title; 
-  //     $this->text = $text; 
-  // } 
-
-  function update($title,$text,$id){
-
-    global $dblink;
-
-    $prepared_sql = "UPDATE  posts SET text=? WHERE id=?";
-
-        if(!$stmt = $mysqli->prepare($prepared_sql)){
-                    echo "DEBUG: prepared statement error";
-              }
-            $stmt->bind_param("sss", $title, $text, $id);
-
-                if(!$stmt->execute()) {
-                    echo "DEBUG: Execute error!";
-                    // return FALSE;
-                }
-                // return TRUE;
-  }
-
-  // function create(){
-  //   global $dblink;
-  //   $prepared_sql = "INSERT INTO posts(title,text) VALUES (?,?);"
-    
-  //   if(!$stmt = $mysqli->prepare($prepared_sql)){
-  //       echo "Prepared statement Error";
-  //   }
-  //   // $stmt->bind_param("ss",$title,$text);
-  //   $stmt = mysqli_prepare($dblink,$prepared_sql);
-  //   mysqli_stmt_bind_param($stmt,'ss',$title,$text);
-  //   mysqli_stmt_execute($stmt);
-
-  // }
+  function update($title, $text) {
+      global $dblink;
+      $sql = "UPDATE posts SET title='";
+      $sql .= mysqli_real_escape_string($dblink, $_POST["title"])."',text='";
+      $sql .= mysqli_real_escape_string($dblink, $_POST["text"])."' WHERE id=";
+      $sql .= intval($this->id);
+      $result = mysqli_query($dblink,$sql);
+      $this->title = $title; 
+      $this->text = $text; 
+  } 
  
   function create(){
       global $dblink;
       $sql = "INSERT INTO posts (title, text) VALUES ('";
-      $title = mysqli_real_escape_string($dblink, htmlspecialchars($_POST["title"]));
-      $text = mysqli_real_escape_string($dblink, htmlspecialchars($_POST["text"]));
+      $title = mysqli_real_escape_string($dblink, $_POST["title"]);
+      $text = mysqli_real_escape_string($dblink, $_POST["text"]);
       $sql .= $title."','".$text;
       $sql.= "')";
       $result = mysqli_query($dblink,$sql);
+
   }
 }
 ?>
