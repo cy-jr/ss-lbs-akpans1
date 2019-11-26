@@ -110,44 +110,88 @@ class Post{
     return $comments;
   } 
  
+  // function find1($id) {
+  //   global $dblink;
+  //   $result = mysqli_query($dblink, "SELECT * FROM posts where id=".$id);
+  //   $row = mysqli_fetch_assoc($result); 
+  //   if (isset($row)){
+  //     $post = new Post($row['id'],$row['title'],$row['text'],$row['published']);
+  //   }
+  //   return $post;
+  // }
+
   function find($id) {
     global $dblink;
-    $result = mysqli_query($dblink, "SELECT * FROM posts where id=".$id);
-    $row = mysqli_fetch_assoc($result); 
-    if (isset($row)){
-      $post = new Post($row['id'],$row['title'],$row['text'],$row['published']);
+    $prep_sql = "SELECT id, title, text, published FROM posts WHERE id=?";
+    $stmt = mysqli_prepare($dblink, $prep_sql);
+    mysqli_stmt_bind_param($stmt,'i',$id);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_bind_result($stmt, $id, $title, $text, $published);
+    if(mysqli_stmt_fetch($stmt)){
+      $post = new Post($id, $title, $text, $published);
     }
     return $post;
-  
   }
-  function delete($id) {
+
+  function delete1($id) {
     global $dblink;
     if (!preg_match('/^[0-9]+$/', $id)) {
       die("ERROR: INTEGER REQUIRED");
     }
     $result = mysqli_query($dblink, "DELETE FROM posts where id=".(int)$id);
   }
-  
-  function update($title, $text) {
-      global $dblink;
-      $sql = "UPDATE posts SET title='";
-      $sql .= mysqli_real_escape_string($dblink, $_POST["title"])."',text='";
-      $sql .= mysqli_real_escape_string($dblink, $_POST["text"])."' WHERE id=";
-      $sql .= intval($this->id);
-      $result = mysqli_query($dblink,$sql);
-      $this->title = $title; 
-      $this->text = $text; 
-  } 
  
-  function create(){
-      global $dblink;
-      $sql = "INSERT INTO posts (title, text) VALUES ('";
-      $title = mysqli_real_escape_string($dblink, $_POST["title"]);
-      $text = mysqli_real_escape_string($dblink, $_POST["text"]);
-      $sql .= $title."','".$text;
-      $sql.= "')";
-      $result = mysqli_query($dblink,$sql);
+  function delete($id) {
+    global $dblink;
+    if (!preg_match('/^[0-9]+$/', $id)) {
+      die("ERROR: INTEGER REQUIRED");
+    }
+    $prep_sql = "DELETE FROM posts where id=?";
+    $stmt = mysqli_prepare($dblink, $prep_sql);
+    mysqli_stmt_bind_param($stmt,'i',$id);
+    mysqli_stmt_execute($stmt);
 
+  } 
+
+
+  // function update1($title, $text) {
+  //     global $dblink;
+  //     $sql = "UPDATE posts SET title='";
+  //     $sql .= mysqli_real_escape_string($dblink, htmlspecialchars($_POST["title"]))."',text='";
+  //     $sql .= mysqli_real_escape_string($dblink, htmlspecialchars($_POST["text"]))."' WHERE id=";
+  //     $sql .= intval($this->id);
+  //     $result = mysqli_query($dblink,$sql);
+  //     $this->title = $title; 
+  //     $this->text = $text; 
+  // }
+
+    function update($title, $text) {
+      global $dblink;
+      $prep_sql = "UPDATE posts SET title=?, text=? where id=?;";
+      $stmt = mysqli_prepare($dblink, $prep_sql);
+      mysqli_stmt_bind_param($stmt, 'ssi', $title, $text, $id);
+      mysqli_stmt_execute($stmt);
   }
+
+ 
+  // function create1(){
+  //     global $dblink;
+  //     $sql = "INSERT INTO posts (title, text) VALUES ('";
+  //     $title = mysqli_real_escape_string($dblink, htmlspecialchars($_POST["title"]));
+  //     $text = mysqli_real_escape_string($dblink, htmlspecialchars($_POST["text"]));
+  //     $sql .= $title."','".$text;
+  //     $sql.= "')";
+  //     $result = mysqli_query($dblink,$sql);
+  // }
+
+    function create(){
+      global $dblink;
+      $prep_sql = "INSERT INTO posts (title,text) VALUES (?,?);";
+      $stmt = mysqli_prepare($dblink, $prep_sql);
+      mysqli_stmt_bind_param($stmt, 'ii', $title,$text);
+      mysqli_stmt_execute($stmt);
+  }
+
+
 }
 ?>
